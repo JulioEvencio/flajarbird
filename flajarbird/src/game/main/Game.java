@@ -21,9 +21,9 @@ public class Game extends Canvas implements KeyListener {
 
 	private static final long serialVersionUID = 1L;
 
-	public static final int WIDTH = 240;
-	public static final int HEIGHT = 160;
-	public static final int SCALE = 3;
+	public static final int WIDTH = 256;
+	public static final int HEIGHT = 256;
+	public static final int SCALE = 2;
 
 	private int fps;
 	private boolean showFPS;
