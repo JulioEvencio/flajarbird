@@ -9,23 +9,29 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
+import game.entities.player.Player;
 
 public class Game extends Canvas implements KeyListener {
 
 	private static final long serialVersionUID = 1L;
 
-	public static final int WIDTH = 720;
-	public static final int HEIGHT = 480;
-	public static final int SCALE = 1;
+	public static final int WIDTH = 240;
+	public static final int HEIGHT = 160;
+	public static final int SCALE = 3;
 
 	private int fps;
 	private boolean showFPS;
 
 	private final BufferedImage renderer;
 
-	public Game() {
+	private Player player;
+
+	public Game() throws IOException {
 		this.addKeyListener(this);
 
 		this.setPreferredSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
@@ -41,10 +47,12 @@ public class Game extends Canvas implements KeyListener {
 		frame.setVisible(true);
 
 		this.renderer = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
+
+		player = new Player(50, 50);
 	}
 
 	private void tick() {
-		// Code
+		player.tick();
 	}
 
 	private void render() {
@@ -60,7 +68,7 @@ public class Game extends Canvas implements KeyListener {
 		render.setColor(Color.BLACK);
 		render.fillRect(0, 0, WIDTH, HEIGHT);
 
-		// Code
+		player.render(render);
 
 		render.dispose();
 
@@ -76,6 +84,23 @@ public class Game extends Canvas implements KeyListener {
 		}
 
 		bs.show();
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		// Code
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		if (e.getKeyCode() == KeyEvent.VK_F3) {
+			showFPS = !showFPS;
+		}
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// Code
 	}
 
 	public void run() {
@@ -110,25 +135,21 @@ public class Game extends Canvas implements KeyListener {
 		}
 	}
 
-	@Override
-	public void keyPressed(KeyEvent e) {
-		// Code
-	}
-
-	@Override
-	public void keyReleased(KeyEvent e) {
-		if (e.getKeyCode() == KeyEvent.VK_F3) {
-			showFPS = !showFPS;
+	public static void main(String[] args) {
+		try {
+			new Game().run();
+		} catch (Exception e) {
+			Game.exitWithError("An error has occurred. The program will be terminated.");
 		}
 	}
 
-	@Override
-	public void keyTyped(KeyEvent e) {
-		// Code
+	public static void exit() {
+		System.exit(0);
 	}
 
-	public static void main(String[] args) {
-		new Game().run();
+	public static void exitWithError(String error) {
+		JOptionPane.showMessageDialog(null, error, "Error", JOptionPane.ERROR_MESSAGE);
+		Game.exit();
 	}
 
 }
