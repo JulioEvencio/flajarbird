@@ -2,6 +2,7 @@ package game.entities;
 
 import java.awt.Graphics;
 
+import game.scenarios.Scenario;
 import game.util.Mask;
 import game.util.Sprite;
 
@@ -45,7 +46,7 @@ public abstract class Entity {
 		return maskCollision;
 	}
 
-	public abstract void tick();
+	public abstract void tick(Scenario scenario);
 
 	public abstract void render(Graphics graphics);
 

@@ -15,6 +15,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import game.entities.player.Player;
+import game.scenarios.Scenario;
 
 public class Game extends Canvas implements KeyListener {
 
@@ -30,6 +31,7 @@ public class Game extends Canvas implements KeyListener {
 	private final BufferedImage renderer;
 
 	private Player player;
+	private Scenario scenario;
 
 	public Game() throws IOException {
 		this.addKeyListener(this);
@@ -48,11 +50,12 @@ public class Game extends Canvas implements KeyListener {
 
 		this.renderer = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
 
-		player = new Player(50, 50);
+		this.player = new Player(0, 0);
+		this.scenario = new Scenario(this.player);
 	}
 
 	private void tick() {
-		player.tick();
+		scenario.tick();
 	}
 
 	private void render() {
@@ -68,7 +71,7 @@ public class Game extends Canvas implements KeyListener {
 		render.setColor(Color.BLACK);
 		render.fillRect(0, 0, WIDTH, HEIGHT);
 
-		player.render(render);
+		scenario.render(render);
 
 		render.dispose();
 
@@ -88,11 +91,13 @@ public class Game extends Canvas implements KeyListener {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		// Code
+		scenario.keyPressed(e);
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
+		scenario.keyReleased(e);
+
 		if (e.getKeyCode() == KeyEvent.VK_F3) {
 			showFPS = !showFPS;
 		}
