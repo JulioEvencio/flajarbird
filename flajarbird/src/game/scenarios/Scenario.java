@@ -44,7 +44,6 @@ public class Scenario {
 	public void render(Graphics graphics) {
 		for (Background background : backgrounds) {
 			background.render(graphics);
-			;
 		}
 
 		player.render(graphics);
