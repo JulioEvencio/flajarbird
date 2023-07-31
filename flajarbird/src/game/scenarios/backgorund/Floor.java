@@ -33,7 +33,7 @@ public class Floor {
 	}
 
 	public void tick(Scenario scenario) {
-		x--;
+		x -= 2;
 
 		if (x == -width) {
 			x = Game.WIDTH;

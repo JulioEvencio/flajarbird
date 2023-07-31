@@ -32,7 +32,7 @@ public class Scenario {
 
 		this.floors = new ArrayList<>();
 
-		for (int i = 0; i < 16; i++) {
+		for (int i = 0; i < 5; i++) {
 			this.floors.add(new Floor(i * 64));
 		}
 	}
