@@ -19,6 +19,10 @@ public class Player extends Entity {
 
 	private void applyGravity(double gravity) {
 		y += gravity;
+
+		if (y < 0) {
+			y = 0;
+		}
 	}
 
 	@Override
