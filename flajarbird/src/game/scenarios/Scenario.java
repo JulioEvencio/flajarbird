@@ -8,6 +8,7 @@ import java.util.List;
 
 import game.entities.player.Player;
 import game.scenarios.backgorund.Background;
+import game.scenarios.backgorund.Floor;
 
 public class Scenario {
 
@@ -16,6 +17,7 @@ public class Scenario {
 	private final Player player;
 
 	private final List<Background> backgrounds;
+	private final List<Floor> floors;
 
 	public Scenario(Player player) throws IOException {
 		this.gravity = 2;
@@ -27,6 +29,12 @@ public class Scenario {
 
 		this.backgrounds.add(new Background(0));
 		this.backgrounds.add(new Background(256));
+
+		this.floors = new ArrayList<>();
+
+		for (int i = 0; i < 16; i++) {
+			this.floors.add(new Floor(i * 64));
+		}
 	}
 
 	public double getGravity() {
@@ -38,6 +46,10 @@ public class Scenario {
 			background.tick(this);
 		}
 
+		for (Floor floor : floors) {
+			floor.tick(this);
+		}
+
 		player.tick(this);
 	}
 
@@ -47,6 +59,10 @@ public class Scenario {
 		}
 
 		player.render(graphics);
+
+		for (Floor floor : floors) {
+			floor.render(graphics);
+		}
 	}
 
 	public void keyPressed(KeyEvent e) {
