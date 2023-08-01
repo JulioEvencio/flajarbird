@@ -12,7 +12,7 @@ public class Player extends Entity {
 	private boolean isDead;
 
 	public Player(int x, int y) throws IOException {
-		super(x, y, 16, 16, 1, new Mask(x, y, 16, 16), new PlayerSprites(x, y, 16, 16));
+		super(x, y, 16, 16, 2, new Mask(x, y, 16, 16), new PlayerSprites(x, y, 16, 16));
 
 		this.isDead = false;
 	}
