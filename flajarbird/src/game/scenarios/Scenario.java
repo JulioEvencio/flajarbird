@@ -7,15 +7,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import game.entities.player.Player;
-import game.scenarios.backgorund.Background;
-import game.scenarios.backgorund.Floor;
-import game.scenarios.backgorund.Pipe;
 
 public class Scenario {
 
 	private double gravity;
 
-	private final Player player;
+	public final Player player;
 
 	private final List<Pipe> pipes;
 	private final List<Floor> floors;
@@ -50,10 +47,18 @@ public class Scenario {
 	public void tick() {
 		for (Pipe pipe : pipes) {
 			pipe.tick(this);
+
+			if (player.getMaskCollision().iscolliding(pipe.getMaskCollision())) {
+				player.toKill();
+			}
 		}
 
 		for (Floor floor : floors) {
 			floor.tick(this);
+
+			if (player.getMaskCollision().iscolliding(floor.getMaskCollision())) {
+				player.toKill();
+			}
 		}
 
 		for (Background background : backgrounds) {

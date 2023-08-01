@@ -18,4 +18,8 @@ public class Mask {
 		return rectangle;
 	}
 
+	public boolean iscolliding(Mask mask) {
+		return this.getRectangle().intersects(mask.getRectangle());
+	}
+
 }

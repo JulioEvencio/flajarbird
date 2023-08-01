@@ -1,4 +1,4 @@
-package game.scenarios.backgorund;
+package game.scenarios;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
@@ -6,7 +6,7 @@ import java.io.IOException;
 
 import game.main.Game;
 import game.resources.Spritesheet;
-import game.scenarios.Scenario;
+import game.util.Mask;
 
 public class Floor {
 
@@ -15,6 +15,8 @@ public class Floor {
 
 	private int width;
 	private int height;
+
+	private final Mask maskCollision;
 
 	private static BufferedImage sprites;
 
@@ -25,6 +27,8 @@ public class Floor {
 		this.width = 64;
 		this.height = 31;
 
+		this.maskCollision = new Mask(x, y, width, height);
+
 		if (Floor.sprites == null) {
 			Spritesheet spritesheet = new Spritesheet("/sprites/scenarios/floor.png");
 
@@ -32,12 +36,18 @@ public class Floor {
 		}
 	}
 
+	public Mask getMaskCollision() {
+		return maskCollision;
+	}
+
 	public void tick(Scenario scenario) {
-		x -= 2;
+		x -= scenario.player.getSpeed();
 
 		if (x == -width) {
 			x = Game.WIDTH;
 		}
+
+		maskCollision.update(x, y, width, height);
 	}
 
 	public void render(Graphics graphics) {

@@ -1,11 +1,11 @@
-package game.scenarios.backgorund;
+package game.scenarios;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
+import game.main.Game;
 import game.resources.Spritesheet;
-import game.scenarios.Scenario;
 
 public class Background {
 
@@ -21,8 +21,8 @@ public class Background {
 		this.x = x;
 		this.y = 0;
 
-		this.width = 256;
-		this.height = 256;
+		this.width = Game.WIDTH;
+		this.height = Game.HEIGHT;
 
 		if (Background.sprites == null) {
 			Spritesheet spritesheet = new Spritesheet("/sprites/scenarios/background.png");
@@ -34,8 +34,8 @@ public class Background {
 	public void tick(Scenario scenario) {
 		x--;
 
-		if (x == -256) {
-			x = 256;
+		if (x == -width) {
+			x = Game.WIDTH;
 		}
 	}
 

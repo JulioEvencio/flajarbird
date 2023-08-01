@@ -34,12 +34,16 @@ public abstract class Entity {
 		this.sprites = sprite;
 	}
 
+	protected void updateMaskCollision() {
+		maskCollision.update((int) x, (int) y, width, height);
+	}
+
 	public void updatePosition(int x, int y) {
 		this.x = x;
 		this.y = y;
 
 		sprites.updatePosition(x, y);
-		maskCollision.update(x, y, width, height);
+		this.updateMaskCollision();
 	}
 
 	public Mask getMaskCollision() {
@@ -52,6 +56,10 @@ public abstract class Entity {
 
 	public double getSpeed() {
 		return speed;
+	}
+
+	public void setSpeed(double speed) {
+		this.speed = speed;
 	}
 
 }

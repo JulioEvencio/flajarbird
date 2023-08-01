@@ -56,6 +56,10 @@ public class Game extends Canvas implements KeyListener {
 
 	private void tick() {
 		scenario.tick();
+
+		if (player.isDead()) {
+			System.out.println("Game Over!");
+		}
 	}
 
 	private void render() {
