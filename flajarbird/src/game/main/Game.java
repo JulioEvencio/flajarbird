@@ -16,6 +16,8 @@ import javax.swing.JOptionPane;
 
 import game.entities.player.Player;
 import game.scenarios.Scenario;
+import game.screens.GameOver;
+import game.screens.Screen;
 
 public class Game extends Canvas implements KeyListener {
 
@@ -25,10 +27,24 @@ public class Game extends Canvas implements KeyListener {
 	public static final int HEIGHT = 256;
 	public static final int SCALE = 2;
 
+	private int gameState;
+
+	public static final int GAME_MENU = 1;
+	public static final int GAME_RUN = 2;
+	public static final int GAME_RESTART = 3;
+	public static final int GAME_PAUSE = 4;
+	public static final int GAME_TUTORIAL = 5;
+	public static final int GAME_CREDITS = 6;
+	public static final int GAME_GAME_OVER = 7;
+	public static final int GAME_FINAL_SCREEN = 8;
+	public static final int GAME_EXIT = 9;
+
 	private int fps;
 	private boolean showFPS;
 
 	private final BufferedImage renderer;
+
+	private final Screen gameOver;
 
 	private Player player;
 	private Scenario scenario;
@@ -50,15 +66,46 @@ public class Game extends Canvas implements KeyListener {
 
 		this.renderer = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
 
+		this.gameState = Game.GAME_RUN;
+
+		this.gameOver = new GameOver();
+
 		this.player = new Player(0, 0);
 		this.scenario = new Scenario(this.player);
 	}
 
-	private void tick() {
-		scenario.tick();
+	private void restart() {
+		try {
+			this.player = new Player(0, 0);
+		} catch (IOException e) {
+			Game.exitWithError("Error loading resources for Player.");
+		}
 
-		if (player.isDead()) {
-			System.out.println("Game Over!");
+		try {
+			this.scenario = new Scenario(this.player);
+		} catch (IOException e) {
+			Game.exitWithError("Error loading resources for Map.");
+		}
+	}
+
+	private void updateGameState(int gameState) {
+		if (gameState == Game.GAME_RESTART) {
+			this.restart();
+
+			gameState = Game.GAME_RUN;
+		}
+
+		this.gameState = gameState;
+	}
+
+	private void tick() {
+		if (gameState == Game.GAME_RUN) {
+			scenario.tick();
+
+			if (scenario.isGameOver()) {
+				this.updateGameState(Game.GAME_GAME_OVER);
+				this.restart();
+			}
 		}
 	}
 
@@ -75,14 +122,20 @@ public class Game extends Canvas implements KeyListener {
 		render.setColor(Color.BLACK);
 		render.fillRect(0, 0, WIDTH, HEIGHT);
 
-		scenario.render(render);
+		if (gameState == Game.GAME_RUN) {
+			scenario.render(render);
+		}
 
 		render.dispose();
 
 		Graphics graphics = bs.getDrawGraphics();
 		graphics.drawImage(renderer, 0, 0, WIDTH * SCALE, HEIGHT * SCALE, null);
 
-		// Code
+		switch (gameState) {
+			case Game.GAME_GAME_OVER:
+				gameOver.render(graphics);
+				break;
+		}
 
 		if (showFPS) {
 			graphics.setColor(Color.WHITE);
@@ -95,12 +148,20 @@ public class Game extends Canvas implements KeyListener {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		scenario.keyPressed(e);
+		if (gameState == Game.GAME_RUN) {
+			scenario.keyPressed(e);
+		}
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		scenario.keyReleased(e);
+		if (gameState == Game.GAME_RUN) {
+			scenario.keyReleased(e);
+		} else if (gameState == Game.GAME_GAME_OVER) {
+			if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+				this.updateGameState(Game.GAME_RUN);
+			}
+		}
 
 		if (e.getKeyCode() == KeyEvent.VK_F3) {
 			showFPS = !showFPS;

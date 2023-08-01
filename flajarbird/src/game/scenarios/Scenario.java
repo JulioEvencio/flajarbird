@@ -44,6 +44,10 @@ public class Scenario {
 		return gravity;
 	}
 
+	public boolean isGameOver() {
+		return player.isDead();
+	}
+
 	public void tick() {
 		for (Pipe pipe : pipes) {
 			pipe.tick(this);
