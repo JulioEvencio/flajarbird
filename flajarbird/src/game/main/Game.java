@@ -20,6 +20,7 @@ import game.screens.Credits;
 import game.screens.GameOver;
 import game.screens.MainMenu;
 import game.screens.Menu;
+import game.screens.Pause;
 import game.screens.Screen;
 import game.screens.Tutorial;
 
@@ -49,6 +50,7 @@ public class Game extends Canvas implements KeyListener {
 	private final BufferedImage renderer;
 	
 	private final Menu mainMenu;
+	private final Menu pause;
 
 	private final Screen tutorial;
 	private final Screen credits;
@@ -77,6 +79,7 @@ public class Game extends Canvas implements KeyListener {
 		this.gameState = Game.GAME_MENU;
 		
 		this.mainMenu = new MainMenu();
+		this.pause = new Pause();
 
 		this.tutorial = new Tutorial();
 		this.credits = new Credits();
@@ -121,6 +124,10 @@ public class Game extends Canvas implements KeyListener {
 			mainMenu.tick();
 
 			this.updateGameState(mainMenu.getOption());
+		} else if (gameState == Game.GAME_PAUSE) {
+			pause.tick();
+
+			this.updateGameState(pause.getOption());
 		} else if (gameState == Game.GAME_EXIT) {
 			Game.exit();
 		}
@@ -151,6 +158,9 @@ public class Game extends Canvas implements KeyListener {
 		switch (gameState) {
 			case Game.GAME_MENU:
 				mainMenu.render(graphics);
+				break;
+			case Game.GAME_PAUSE:
+				pause.render(graphics);
 				break;
 			case Game.GAME_TUTORIAL:
 				tutorial.render(graphics);
@@ -183,6 +193,26 @@ public class Game extends Canvas implements KeyListener {
 	public void keyReleased(KeyEvent e) {
 		if (gameState == Game.GAME_RUN) {
 			scenario.keyReleased(e);
+
+			if (e.getKeyCode() == KeyEvent.VK_P || e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+				this.updateGameState(Game.GAME_PAUSE);
+			}
+		} else if (gameState == Game.GAME_PAUSE) {
+			if (e.getKeyCode() == KeyEvent.VK_W) {
+				pause.menuUp();
+			}
+
+			if (e.getKeyCode() == KeyEvent.VK_S) {
+				pause.menuDown();
+			}
+
+			if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+				pause.menuEnter();
+			}
+
+			if (e.getKeyCode() == KeyEvent.VK_P || e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+				this.updateGameState(Game.GAME_RUN);
+			}
 		} else if (gameState == Game.GAME_MENU) {
 			if (e.getKeyCode() == KeyEvent.VK_W) {
 				mainMenu.menuUp();
