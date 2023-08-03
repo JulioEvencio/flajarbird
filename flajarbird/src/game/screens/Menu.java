@@ -88,7 +88,7 @@ public abstract class Menu {
 
 		graphics.setColor(Color.YELLOW);
 		graphics.setFont(new Font("arial", Font.BOLD, 36));
-		graphics.drawString("Pacmazeman", (Game.WIDTH * Game.SCALE) / 2 - 110, (Game.HEIGHT * Game.SCALE) / 2 - 160);
+		graphics.drawString("Flajarbird", (Game.WIDTH * Game.SCALE) / 2 - 80, (Game.HEIGHT * Game.SCALE) / 2 - 160);
 
 		graphics.setColor(Color.WHITE);
 		graphics.setFont(new Font("arial", Font.BOLD, 24));
@@ -105,7 +105,8 @@ public abstract class Menu {
 		}
 
 		graphics.setColor(Color.WHITE);
-		graphics.drawString("Use W and S keys to move and ENTER to select", Game.WIDTH * Game.SCALE / 2 - 305, 414);
+		graphics.setFont(new Font("arial", Font.BOLD, 16));
+		graphics.drawString("Use W and S keys to move and ENTER to select", Game.WIDTH * Game.SCALE / 2 - 200, 414);
 
 		graphics.setColor(Color.WHITE);
 		graphics.setFont(new Font("arial", Font.BOLD, 12));
