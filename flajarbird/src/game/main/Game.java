@@ -20,6 +20,7 @@ import game.screens.GameOver;
 import game.screens.MainMenu;
 import game.screens.Menu;
 import game.screens.Screen;
+import game.screens.Tutorial;
 
 public class Game extends Canvas implements KeyListener {
 
@@ -48,6 +49,7 @@ public class Game extends Canvas implements KeyListener {
 	
 	private final Menu mainMenu;
 
+	private final Screen tutorial;
 	private final Screen gameOver;
 
 	private Player player;
@@ -74,6 +76,7 @@ public class Game extends Canvas implements KeyListener {
 		
 		this.mainMenu = new MainMenu();
 
+		this.tutorial = new Tutorial();
 		this.gameOver = new GameOver();
 
 		this.restart();
@@ -146,6 +149,9 @@ public class Game extends Canvas implements KeyListener {
 			case Game.GAME_MENU:
 				mainMenu.render(graphics);
 				break;
+			case Game.GAME_TUTORIAL:
+				tutorial.render(graphics);
+				break;
 			case Game.GAME_GAME_OVER:
 				gameOver.render(graphics);
 				break;
@@ -183,7 +189,7 @@ public class Game extends Canvas implements KeyListener {
 			if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 				mainMenu.menuEnter();
 			}
-		} else if (gameState == Game.GAME_GAME_OVER) {
+		} else if (gameState == Game.GAME_TUTORIAL || gameState == Game.GAME_GAME_OVER) {
 			if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 				this.updateGameState(Game.GAME_MENU);
 			}

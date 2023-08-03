@@ -86,7 +86,7 @@ public abstract class Menu {
 		graphics.setColor(Color.BLACK);
 		graphics.fillRect(0, 0, Game.WIDTH * Game.SCALE, Game.HEIGHT * Game.SCALE);
 
-		graphics.setColor(Color.YELLOW);
+		graphics.setColor(Color.WHITE);
 		graphics.setFont(new Font("arial", Font.BOLD, 36));
 		graphics.drawString("Flajarbird", (Game.WIDTH * Game.SCALE) / 2 - 80, (Game.HEIGHT * Game.SCALE) / 2 - 160);
 
