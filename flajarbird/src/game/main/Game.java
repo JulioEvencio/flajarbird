@@ -16,6 +16,7 @@ import javax.swing.JOptionPane;
 
 import game.entities.player.Player;
 import game.scenarios.Scenario;
+import game.screens.Credits;
 import game.screens.GameOver;
 import game.screens.MainMenu;
 import game.screens.Menu;
@@ -50,6 +51,7 @@ public class Game extends Canvas implements KeyListener {
 	private final Menu mainMenu;
 
 	private final Screen tutorial;
+	private final Screen credits;
 	private final Screen gameOver;
 
 	private Player player;
@@ -77,6 +79,7 @@ public class Game extends Canvas implements KeyListener {
 		this.mainMenu = new MainMenu();
 
 		this.tutorial = new Tutorial();
+		this.credits = new Credits();
 		this.gameOver = new GameOver();
 
 		this.restart();
@@ -152,6 +155,9 @@ public class Game extends Canvas implements KeyListener {
 			case Game.GAME_TUTORIAL:
 				tutorial.render(graphics);
 				break;
+			case Game.GAME_CREDITS:
+				credits.render(graphics);
+				break;
 			case Game.GAME_GAME_OVER:
 				gameOver.render(graphics);
 				break;
@@ -189,7 +195,7 @@ public class Game extends Canvas implements KeyListener {
 			if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 				mainMenu.menuEnter();
 			}
-		} else if (gameState == Game.GAME_TUTORIAL || gameState == Game.GAME_GAME_OVER) {
+		} else if (gameState == Game.GAME_TUTORIAL || gameState == Game.GAME_CREDITS || gameState == Game.GAME_GAME_OVER) {
 			if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 				this.updateGameState(Game.GAME_MENU);
 			}
