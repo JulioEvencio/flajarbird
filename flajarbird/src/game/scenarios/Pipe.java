@@ -53,6 +53,7 @@ public class Pipe {
 		x -= scenario.player.getSpeed();
 
 		if (x == -width) {
+			scenario.addScore();
 			x = Game.WIDTH;
 			this.updatePosition();
 		}

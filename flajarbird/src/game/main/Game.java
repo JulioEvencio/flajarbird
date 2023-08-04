@@ -208,6 +208,10 @@ public class Game extends Canvas implements KeyListener {
 				gameOver.render(graphics);
 				break;
 		}
+		
+		if (gameState == Game.GAME_RUN) {
+			scenario.renderString(graphics);
+		}
 
 		if (showFPS) {
 			graphics.setColor(Color.WHITE);

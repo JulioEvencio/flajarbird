@@ -1,5 +1,7 @@
 package game.scenarios;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
@@ -13,6 +15,8 @@ public class Scenario {
 	private double gravity;
 
 	public final Player player;
+	
+	private int score;
 
 	private final List<Pipe> pipes;
 	private final List<Floor> floors;
@@ -23,6 +27,8 @@ public class Scenario {
 
 		this.player = player;
 		this.player.updatePosition(50, 50);
+		
+		this.score = 0;
 
 		this.pipes = new ArrayList<>();
 
@@ -39,6 +45,10 @@ public class Scenario {
 
 		this.backgrounds.add(new Background(0));
 		this.backgrounds.add(new Background(256));
+	}
+	
+	public void addScore() {
+		score++;
 	}
 
 	public double getGravity() {
@@ -87,6 +97,12 @@ public class Scenario {
 		for (Floor floor : floors) {
 			floor.render(graphics);
 		}
+	}
+	
+	public void renderString(Graphics graphics) {
+		graphics.setColor(Color.WHITE);
+		graphics.setFont(new Font("arial", Font.BOLD, 12));
+		graphics.drawString("SCORE: " + score, 10, 20);
 	}
 
 	public void keyPressed(KeyEvent e) {
