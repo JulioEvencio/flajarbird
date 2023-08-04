@@ -3,12 +3,15 @@ package game.scenarios;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.Random;
 
 import game.main.Game;
 import game.resources.Spritesheet;
 import game.util.Mask;
 
 public class Pipe {
+
+	private final Random random;
 
 	private int x;
 	private int y;
@@ -21,8 +24,10 @@ public class Pipe {
 	private static BufferedImage sprites;
 
 	public Pipe(int x) throws IOException {
+		this.random = new Random();
+
 		this.x = x;
-		this.y = 0;
+		this.updatePosition();
 
 		this.width = 32;
 		this.height = 81;
@@ -36,6 +41,10 @@ public class Pipe {
 		}
 	}
 
+	private void updatePosition() {
+		this.y = random.nextInt(150);
+	}
+
 	public Mask getMaskCollision() {
 		return maskCollision;
 	}
@@ -45,6 +54,7 @@ public class Pipe {
 
 		if (x == -width) {
 			x = Game.WIDTH;
+			this.updatePosition();
 		}
 
 		maskCollision.update(x, y, width, height);

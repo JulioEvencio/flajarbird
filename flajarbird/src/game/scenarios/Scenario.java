@@ -26,7 +26,8 @@ public class Scenario {
 
 		this.pipes = new ArrayList<>();
 
-		this.pipes.add(new Pipe(200));
+		this.pipes.add(new Pipe(500));
+		this.pipes.add(new Pipe(650));
 
 		this.floors = new ArrayList<>();
 
