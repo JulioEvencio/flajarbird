@@ -47,6 +47,10 @@ public class Scenario {
 		this.backgrounds.add(new Background(256));
 	}
 	
+	public int getScore() {
+		return score;
+	}
+	
 	public void addScore() {
 		score++;
 	}

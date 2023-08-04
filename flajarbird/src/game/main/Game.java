@@ -65,6 +65,8 @@ public class Game extends Canvas implements KeyListener {
 	private Sound musicNow;
 	private final Sound soundMenu;
 	private final Sound soundGame;
+	
+	public static int score;
 
 	public Game() throws IOException {
 		soundMenu = new Sound("/sounds/sunsai/menu.wav");
@@ -102,6 +104,8 @@ public class Game extends Canvas implements KeyListener {
 		this.musicNow = this.soundMenu;
 
 		this.restart();
+		
+		Game.score = 0;
 	}
 
 	private void restart() {
@@ -153,6 +157,8 @@ public class Game extends Canvas implements KeyListener {
 			scenario.tick();
 
 			if (scenario.isGameOver()) {
+				Game.score = scenario.getScore();
+
 				this.updateGameState(Game.GAME_GAME_OVER);
 				this.restart();
 			}
