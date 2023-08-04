@@ -15,6 +15,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import game.entities.player.Player;
+import game.resources.Sound;
 import game.scenarios.Scenario;
 import game.screens.Credits;
 import game.screens.GameOver;
@@ -58,8 +59,20 @@ public class Game extends Canvas implements KeyListener {
 
 	private Player player;
 	private Scenario scenario;
+	
+	private boolean enableSound;
+	
+	private Sound musicNow;
+	private final Sound soundMenu;
+	private final Sound soundGame;
 
 	public Game() throws IOException {
+		soundMenu = new Sound("/sounds/sunsai/menu.wav");
+		soundMenu.start();
+		
+		soundGame = new Sound("/sounds/wiphotos/game.wav");
+		soundGame.start();
+		
 		this.addKeyListener(this);
 
 		this.setPreferredSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
@@ -84,6 +97,9 @@ public class Game extends Canvas implements KeyListener {
 		this.tutorial = new Tutorial();
 		this.credits = new Credits();
 		this.gameOver = new GameOver();
+		
+		this.enableSound = true;
+		this.musicNow = this.soundMenu;
 
 		this.restart();
 	}
@@ -100,6 +116,17 @@ public class Game extends Canvas implements KeyListener {
 		} catch (IOException e) {
 			Game.exitWithError("Error loading resources for Map.");
 		}
+		
+		this.setMusicNow(soundGame);
+	}
+	
+	public void setMusicNow(Sound sound) {
+		soundMenu.soundStop();
+		soundGame.soundStop();
+		
+		musicNow.soundStop();
+		musicNow = sound;
+		musicNow.soundPlay();
 	}
 
 	private void updateGameState(int gameState) {
@@ -110,9 +137,21 @@ public class Game extends Canvas implements KeyListener {
 		}
 
 		this.gameState = gameState;
+		
+		if (gameState == Game.GAME_RUN && musicNow != soundGame) {
+			this.setMusicNow(soundGame);
+		} else if (musicNow != soundMenu) {
+			this.setMusicNow(soundMenu);
+		}
 	}
 
 	private void tick() {
+		if (enableSound) {
+			musicNow.soundPlay();
+		} else {
+			musicNow.soundStop();
+		}
+		
 		if (gameState == Game.GAME_RUN) {
 			scenario.tick();
 
