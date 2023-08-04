@@ -116,8 +116,6 @@ public class Game extends Canvas implements KeyListener {
 		} catch (IOException e) {
 			Game.exitWithError("Error loading resources for Map.");
 		}
-		
-		this.setMusicNow(soundGame);
 	}
 	
 	public void setMusicNow(Sound sound) {
@@ -126,7 +124,6 @@ public class Game extends Canvas implements KeyListener {
 		
 		musicNow.soundStop();
 		musicNow = sound;
-		musicNow.soundPlay();
 	}
 
 	private void updateGameState(int gameState) {
@@ -272,6 +269,10 @@ public class Game extends Canvas implements KeyListener {
 
 		if (e.getKeyCode() == KeyEvent.VK_F3) {
 			showFPS = !showFPS;
+		}
+		
+		if (e.getKeyCode() == KeyEvent.VK_F4) {
+			enableSound = !enableSound;
 		}
 	}
 
