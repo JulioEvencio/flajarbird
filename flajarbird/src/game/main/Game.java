@@ -17,7 +17,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import game.entities.player.Player;
-import game.resources.Sound;
+import game.resources.Audio;
 import game.scenarios.Scenario;
 import game.screens.Credits;
 import game.screens.GameOver;
@@ -64,18 +64,16 @@ public class Game extends Canvas implements KeyListener {
 	
 	private boolean enableSound;
 	
-	private Sound musicNow;
-	private final Sound soundMenu;
-	private final Sound soundGame;
+	private Audio musicNow;
+	private final Audio soundMenu;
+	private final Audio soundGame;
 	
 	public static int score;
 
 	public Game() throws IOException {
-		soundMenu = new Sound("/sounds/sunsai/menu.wav");
-		soundMenu.start();
-		
-		soundGame = new Sound("/sounds/wiphotos/game.wav");
-		soundGame.start();
+		this.soundMenu = new Audio("/sounds/sunsai/menu.wav");
+		this.soundGame = new Audio("/sounds/wiphotos/game.wav");
+		this.musicNow = this.soundMenu;
 		
 		this.addKeyListener(this);
 
@@ -127,12 +125,12 @@ public class Game extends Canvas implements KeyListener {
 		}
 	}
 	
-	public void setMusicNow(Sound sound) {
-		soundMenu.soundStop();
-		soundGame.soundStop();
+	public void setMusicNow(Audio sound) {
+		if (this.musicNow != null) {
+			this.musicNow.stop();
+		}
 		
-		musicNow.soundStop();
-		musicNow = sound;
+		this.musicNow = sound;
 	}
 
 	private void updateGameState(int gameState) {
@@ -153,9 +151,9 @@ public class Game extends Canvas implements KeyListener {
 
 	private void tick() {
 		if (enableSound) {
-			musicNow.soundPlay();
+			musicNow.play();
 		} else {
-			musicNow.soundStop();
+			musicNow.stop();
 		}
 		
 		if (gameState == Game.GAME_RUN) {
