@@ -17,7 +17,7 @@ This project is just a simple `Java` project, so compile it normally using a `JD
 
 Please feel free to send pull requests and report issues.
 
-## Images
+## Gallery
 
 ![img-01](https://img.itch.zone/aW1hZ2UvMjIwNDU0Ny8xMzAzNDE0OC5wbmc=/original/qITqcS.png)
 
