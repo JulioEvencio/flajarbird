@@ -13,6 +13,10 @@ Click [here](https://youtu.be/xqqdUuVdnFE) to watch the game demonstration video
 
 This project is just a simple `Java` project, so compile it normally using a `JDK` (I recommend `OpenJDK 17`). The main class that contains the `main method` is `game.main.Game`
 
+## Contribution
+
+Please feel free to send pull requests and report issues.
+
 ## Images
 
 ![img-01](https://img.itch.zone/aW1hZ2UvMjIwNDU0Ny8xMzAzNDE0OC5wbmc=/original/qITqcS.png)
